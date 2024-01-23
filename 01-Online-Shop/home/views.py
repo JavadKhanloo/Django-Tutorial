@@ -1,10 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
 
 def home(request):
-    return HttpResponse('به فروشگاه آنلاین ما خوش آمدید')
+    return render(request, 'home/home.html')
 
 
 def all_products(request):
-    return HttpResponse('صفحه محصولات')
+    return render(request, 'home/product.html')
