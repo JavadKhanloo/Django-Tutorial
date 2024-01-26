@@ -3,12 +3,13 @@ from django.contrib.auth.models import User
 
 
 class UserRegisterForm(forms.Form):
-    user_name = forms.CharField(max_length=200)
-    email = forms.EmailField()
-    first_name = forms.CharField(max_length=200)
-    last_name = forms.CharField(max_length=200)
-    password = forms.CharField(max_length=200)
-    confirm_password = forms.CharField(max_length=200)
+    user_name = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'placeholder': 'نام کاربری'}))
+    email = forms.EmailField(widget=forms.TextInput(attrs={'placeholder': 'پست الکترونیک'}))
+    first_name = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'placeholder': 'نام'}))
+    last_name = forms.CharField(max_length=200, widget=forms.TextInput(attrs={'placeholder': 'نام خانوادگی'}))
+    password = forms.CharField(max_length=200, widget=forms.PasswordInput(attrs={'placeholder': 'رمز عبور'}))
+    confirm_password = forms.CharField(max_length=200,
+                                       widget=forms.PasswordInput(attrs={'placeholder': 'تکرار رمز عبور'}))
 
     def clean_user_name(self):
         user = self.cleaned_data['user_name']
