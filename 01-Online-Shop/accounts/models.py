@@ -12,12 +12,7 @@ class Profile(models.Model):
 def save_user_profile(sender, **kwargs):
     if kwargs['created']:
         user_profile = Profile(user=kwargs['instance'])
-        print("--------------------------------")
-        print(user_profile.user)
-        print(user_profile.phone)
-        print(user_profile.address)
-        print("--------------------------------")
-        user_profile.save()
+        user_profile.save(force_insert=True)
 
 
 post_save.connect(save_user_profile, sender=User)
