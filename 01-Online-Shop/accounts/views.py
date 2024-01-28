@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from .forms import *
+from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -10,9 +11,10 @@ def user_register(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data
-            User.objects.create_user(username=data['user_name'], email=data['email'],
-                                     first_name=data['first_name'], last_name=data['last_name'],
-                                     password=data['confirm_password'])
+            user = User.objects.create_user(username=data['user_name'], email=data['email'],
+                                            first_name=data['first_name'], last_name=data['last_name'],
+                                            password=data['confirm_password'])
+            user.save()
             messages.success(request, 'خوش آمدید', 'primary')
             return redirect('home:home')
     else:
@@ -48,4 +50,5 @@ def user_logout(request):
 
 
 def user_profile(request):
-    return render(request, 'accounts/profile.html')
+    profile = Profile.objects.get(user_id=request.user.id)
+    return render(request, 'accounts/profile.html', {'profile': profile})
